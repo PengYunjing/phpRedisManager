@@ -28,7 +28,7 @@ if (!isset($SysName)) {
 
         <div id="optBar">
             <button id="connectNew" type="button" onclick="OpenLink()"><i class="glyphicon glyphicon-plus"></i> 连接到 Redis 服务器</button>
-            <span class="opt_btn glyphicon glyphicon-cog"></span>
+            <!-- <span class="opt_btn glyphicon glyphicon-cog"></span> -->
             <span class="opt_btn ref_btn glyphicon glyphicon-refresh" onclick="Refresh()"></span>
             <span class="opt_btn add_btn fa fa-plus-circle" onclick="OpenAddNewKey()"></span>
             <span class="logout_btn btn btn-default btn-sm" onclick="Logout()">注销</span>
