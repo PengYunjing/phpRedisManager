@@ -18,7 +18,7 @@ class RedisClass
 
     /**
      * 实例化的对象,单例模式.
-     * @var \iphp\db\Redis
+     * @var Redis
      */
     static private $_instance=array();
 
@@ -63,7 +63,7 @@ class RedisClass
      * 如果连接超时，将会重新建立一个连接
      * @param array $config
      * @param int $dbId
-     * @return \iphp\db\Redis
+     * @return Redis
      */
     public static function getInstance($config, $attr = array())
     {
@@ -110,7 +110,7 @@ class RedisClass
 
     /**
      * 执行原生的redis操作
-     * @return \Redis
+     * @return Redis
      */
     public function getRedis()
     {
