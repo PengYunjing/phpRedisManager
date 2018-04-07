@@ -245,7 +245,7 @@ if (isset($_POST['method']) && !empty($_POST['method'])) {
             $data['value'] = $value;
             $data['ttl'] = $RedisClass->ttl($key);
             $ret['data'] = $data;
-            if (!empty($value)) {
+            if (!empty($value) || $value == '') {
                 $ret['code'] = 200;
             }
 
@@ -525,7 +525,7 @@ if (isset($_POST['method']) && !empty($_POST['method'])) {
                 }
             } elseif ($type == 'list') {
                 $RedisClass->lSet($key, $index, 'spe_mark_del');
-                if ($RedisClass->lRem($key, 0, 'spe_mark_del')) {
+                if ($RedisClass->lRem($key, 'spe_mark_del',  0)) {
                     $ret['code'] = 200;
                     $ret['data']['size'] = $RedisClass->lLen($key);
                 }

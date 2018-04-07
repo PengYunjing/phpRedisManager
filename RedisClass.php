@@ -626,10 +626,10 @@ class RedisClass
      *  >0　从头部开始
      *  =0　删除全部
      * @param string $key
-     * @param int $count
      * @param string $value
+     * @param int $count
      */
-    public function lRem($key,$count,$value)
+    public function lRem($key,$value,$count)
     {
         return $this->redis->lRem($key,$value,$count);
     }
