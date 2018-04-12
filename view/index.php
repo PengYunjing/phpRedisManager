@@ -5,7 +5,7 @@
 if (empty($_SESSION['redis_manager'])) {
     exit();
 }
-if (!isset($SysName)) {
+if (!isset($GlobalConfig['sys_name'])) {
     exit();
 }
 ?>
@@ -15,12 +15,12 @@ if (!isset($SysName)) {
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-        <title><?php echo $SysName; ?></title>
+        <title><?php echo $GlobalConfig['sys_name']; ?></title>
         <link rel="icon" href="img/favicon.ico">
         <link href="./plugins/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="./plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="./plugins/animate/animate.min.css" rel="stylesheet">
-        <link href="./css/style.css" rel="stylesheet">
+        <link href="./css/style.css?v=<?php echo $GlobalConfig['static_version']; ?>" rel="stylesheet">
         <script src="./plugins/jquery-2.1.4/jquery.min.js"></script>
         <script src="./plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     </head>
@@ -226,7 +226,8 @@ if (!isset($SysName)) {
 
         <div id="tipBox"><p class="msg animated"></p></div>
     </body>
-    <script src="js/js.js"></script>
+    <script src="js/common.js?v=<?php echo $GlobalConfig['static_version']; ?>"></script>
+    <script src="js/index.js?v=<?php echo $GlobalConfig['static_version']; ?>"></script>
     <script>
         var TtlTimer;
         var Ttl=0;

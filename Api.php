@@ -3,9 +3,9 @@
  * 接口
  */
 
+require_once ('Config.php');
 require_once ('Start.php');
 require_once ('RedisClass.php');
-require_once ('Constant.php');
 
 if (isset($_POST['method']) && !empty($_POST['method'])) {
     $Method = $_POST['method'];
@@ -15,6 +15,11 @@ if (isset($_POST['method']) && !empty($_POST['method'])) {
         $host = trim($_POST['host']);
         $port = intval(trim($_POST['port']));
         $auth = trim($_POST['auth']);
+        $code = trim($_POST['code']);
+        if ($code != $GlobalConfig['code']) {
+            $ret['msg'] = '内码错误';
+            exit(json_encode($ret));
+        }
         $Redis = new Redis();
         if ($Redis->connect($host, $port) !== false) {
             if (!empty($auth)) {
@@ -33,7 +38,7 @@ if (isset($_POST['method']) && !empty($_POST['method'])) {
             $con = array(
                 'host' => $host,
                 'port' => $port,
-                'auth' => trim($_POST['auth'])
+                'auth' => $auth
             );
             $_SESSION['redis_manager'] = array(
                 'online' => $con,
@@ -66,6 +71,13 @@ if (isset($_POST['method']) && !empty($_POST['method'])) {
         $host = trim($_POST['host']);
         $port = intval(trim($_POST['port']));
         $auth = trim($_POST['auth']);
+        $list = $RedisManager['list'];
+        foreach ($list as $k=> $v) {
+            if ($host == $v['host'] && $port == $v['port']) {
+                $ret['msg'] = '已有相同的连接';
+                exit(json_encode($ret));
+            }
+        }
         $Redis = new Redis();
         if ($Redis->connect($host, $port) !== false) {
             if (!empty($auth)) {
@@ -86,7 +98,6 @@ if (isset($_POST['method']) && !empty($_POST['method'])) {
                 'port' => $port,
                 'auth' => $auth
             );
-            $list = $RedisManager['list'];
             $list[] = $con;
             $_SESSION['redis_manager'] = array(
                 'online' => $con,
@@ -169,7 +180,7 @@ if (isset($_POST['method']) && !empty($_POST['method'])) {
             $ret['data'][] = $item; 
         }
         $arr = $RedisClass->info();
-        $info[] = array('text'=>'phpRedisManager版本', 'val'=>SYS_VERSION);
+        $info[] = array('text'=>$GlobalConfig['sys_name'].'版本', 'val'=>$GlobalConfig['sys_version']);
         foreach ($arr as $k => $val) {
             if ($k == 'redis_version') {
                 $info[] = array('text'=>'Redis版本', 'val'=>$val);

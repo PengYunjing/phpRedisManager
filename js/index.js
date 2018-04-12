@@ -1,5 +1,3 @@
-var ApiUrl = './Api.php';
-
 var Compare = function(field1, field2, sort){
     return function(a, b){
         var value1 = a[field1];
@@ -232,8 +230,10 @@ function SearchKeywords(keywords) {
 }
 
 function SelectDb(els) {
-    $(els).parent().siblings().find('.sel').hide();
-    $(els).find('.sel').show();
+    $(els).parent().siblings().find('.seldb').removeClass('seldb');
+    $(els).addClass('seldb');
+    $(els).parent().siblings().find('.sel_icon').hide();
+    $(els).find('.sel_icon').show();
     var db = $(els).attr('data-db');
     window.CurrentDb = db;
     window.OpenDb = 1;
@@ -770,7 +770,7 @@ function LoadData() {
                 for (var i=0; i<res.data.length; i++) {
                     var item = res.data[i];
                     html += '<div class="db_box db_'+ i +'">';
-                    html += '   <div class="database" onclick="SelectDb(this)" data-db="' + item.db + '"><i class="fa fa-database"></i><span class="dbname">'+ item.dbname +'</span>（<span class="total">'+ item.total +'</span>）<i class="fa fa-check sel"></i></div>';
+                    html += '   <div class="database" onclick="SelectDb(this)" data-db="' + item.db + '"><i class="fa fa-database"></i><span class="dbname">'+ item.dbname +'</span>（<span class="total">'+ item.total +'</span>）<i class="fa fa-check sel_icon"></i></div>';
                     html += '   <ul class="keysList">';
                     for (var j=0; j<item.keys.length; j++) {
                         item_c = item.keys[j];
@@ -783,7 +783,7 @@ function LoadData() {
                 $('#keysListBox').html(html);
                 if (window.OpenDb) {
                     $('#keysListBox .db_'+window.CurrentDb+' .keysList').show();
-                    $('#keysListBox .db_'+window.CurrentDb).find('.sel').show();
+                    $('#keysListBox .db_'+window.CurrentDb).find('.sel_icon').show().parent().addClass('seldb');
                 }
 
                 var infoHtml = '';
@@ -800,79 +800,6 @@ function LoadData() {
             Msg('系统出错');
         }
     });
-}
-
-function Msg(msg) {
-    if (window.MsgTimerP) {
-        clearTimeout(window.MsgTimerP);
-    }
-    if (window.MsgTimerC) {
-        clearTimeout(window.MsgTimerC);
-    }
-    $('#tipBox .msg').text(msg);
-    $('#tipBox .msg').removeClass('bounceIn').removeClass('zoomOut');
-    $('#tipBox .msg').addClass('bounceIn');
-    $('#tipBox').show();
-    window.MsgTimerP = setTimeout(function () {
-        $('#tipBox .msg').removeClass('bounceIn').addClass('zoomOut');
-        window.MsgTimerC = setTimeout(function () {
-            $('#tipBox').hide();
-        },1000);
-    },1000);
-}
-
-function Login(btn) {
-    if (window.Logining === true) return;
-    var host = $.trim($('#loginBox .host').val());
-    var port = $.trim($('#loginBox .port').val());
-    var auth = $.trim($('#loginBox .auth').val());
-    if (host.length == 0) {
-        host = '127.0.0.1';
-    }
-    if (port.length == 0) {
-        port = '6379';
-    }
-
-    LoginStart();
-    $.ajax({
-        url: ApiUrl,
-        type: 'post',
-        dataType: 'json',
-        data: {
-            method: 'Login',
-            host: host,
-            port: port,
-            auth: auth
-        },
-        success: function(res) {
-            if (res.code == 200) {
-                location.reload();
-            } else {
-                if (res.msg) {
-                    Msg(res.msg);
-                } else {
-                    Msg('登录失败');
-                }
-                LoginEnd();
-            }
-        },
-        error: function() {
-            Msg('系统出错');
-            LoginEnd();
-        }
-    });
-}
-
-function LoginStart() {
-    $('#loginBox .login_btn').attr('disabled', 'disabled');
-    $('#loginBox .login_btn').text('登录中...');
-    window.Logining = true;
-}
-
-function LoginEnd() {
-    $('#loginBox .login_btn').attr('disabled', false);
-    $('#loginBox .login_btn').text('登录');
-    window.Logining = false;
 }
 
 function Logout() {

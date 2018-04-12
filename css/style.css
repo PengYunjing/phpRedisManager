@@ -16,7 +16,7 @@ textarea{resize:none}
 #loginBox input{width:170px;margin-left:10px;margin-top:5px}
 #loginBox .btn_row{margin-top:20px;text-align:center}
 #loginBox .login_btn{padding-left:20px;padding-right:20px}
-#loginBox .version{position:relative;top:20px;margin-top:20px;font-size:12px;text-align:center;color:#999}
+#loginBox .version{position:relative;top:30px;margin-top:10px;font-size:12px;text-align:center;color:#999}
 #copyright{position:absolute;left:0;bottom:5px;width:100%;font-size:12px;color:#999;text-align:center}
 
 /* optBar */
@@ -25,6 +25,7 @@ textarea{resize:none}
 #optBar .glyphicon-cog{margin-right:5px}
 #optBar .opt_btn{position:relative;top:2px;padding:4px;cursor:pointer;font-size:14px;border-radius:20px;border:1px solid #999;color:#0aa2ce;background:rgba(230,230,230,1)}
 #optBar .opt_btn:hover{background:rgba(200,200,200,1)}
+#optBar .opt_btn:active{background:rgba(185,185,185,1)}
 #optBar .add_btn{margin-left:5px;padding:1.7px 3px;top:2px;border-radius:13px;font-size:19px}
 #optBar .logout_btn{position:relative;top:3px;right:5px;float:right;font-weight:bold}
 
@@ -39,9 +40,10 @@ textarea{resize:none}
 #keysListBox{height:calc(100% - 42px);overflow-y:scroll;border:1px solid #e7e7e7}
 #keysListBox .db_box .database{padding:7px;cursor:pointer;color:#999}
 #keysListBox .db_box .database:hover{background:rgba(0,0,0,0.1)}
+#keysListBox .db_box .database.seldb{background:rgba(0,0,0,0.07)}
 #keysListBox .db_box .database .dbname{margin-left:3px;color:#555}
 #keysListBox .db_box .database .total{color:#888}
-#keysListBox .db_box .database .sel{display:none;position:relative;top:2px;float:right;color:#1ec326}
+#keysListBox .db_box .database .sel_icon{display:none;position:relative;top:2px;float:right;color:#1ec326}
 #keysListBox .keysList{display:none}
 #keysListBox .keysList li{padding:4px 4px 4px 17px;cursor:pointer;border-radius:3px}
 #keysListBox .keysList li:hover{background:rgba(0,0,0,0.1)}
